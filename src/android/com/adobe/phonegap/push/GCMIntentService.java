@@ -30,6 +30,7 @@ import com.google.android.gms.gcm.GcmReceiver;
 import io.intercom.android.sdk.push.IntercomPushClient;
 
 import com.pushwoosh.GCMListenerService;
+import com.pushwoosh.internal.PushManagerImpl;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -83,6 +84,9 @@ public class GCMIntentService extends GcmListenerService implements PushConstant
         }
         if (intercomPushClient.isIntercomPush(extras)) {
             intercomPushClient.handlePush(getApplication(), extras);
+            extras.putString("from", from);
+            JSONObject data = PushManagerImpl.bundleToJSON(extras);
+            PushPlugin.doOnPushReceived(data.toString());
         } else if(PushPlugin.isPushwooshPush(extras)) {
             extras.putString("from", from);
             dispatchMessage(GCMListenerService.class.getName(), extras);
