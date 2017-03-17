@@ -50,6 +50,11 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
         return extras.containsKey("receiver") && "intercom_sdk".equals(extras.getString("receiver"));
     }
 
+    public static boolean isPushwooshPush(Bundle extras) {
+        return extras.containsKey("pw_msg") && "1".equals(extras.getString("pw_msg"));
+    }
+
+
     @Override
     public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {
         Log.v(LOG_TAG, "execute: action=" + action);

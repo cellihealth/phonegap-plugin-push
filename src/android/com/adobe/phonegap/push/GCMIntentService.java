@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ComponentName;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -26,6 +27,8 @@ import android.util.Log;
 import com.google.android.gms.gcm.GcmListenerService;
 
 import io.intercom.android.sdk.push.IntercomPushClient;
+
+import com.pushwoosh.GCMListenerService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,6 +64,15 @@ public class GCMIntentService extends GcmListenerService implements PushConstant
         }
     }
 
+    private void dispatchMessage(String component, Bundle data) {
+        Intent intent = new Intent();
+        intent.putExtras(data);
+        intent.setAction("com.google.android.c2dm.intent.RECEIVE");
+        intent.setComponent(new ComponentName(getPackageName(), component));
+  
+        GcmReceiver.startWakefulService(getApplicationContext(), intent);
+    }
+
     @Override
     public void onMessageReceived(String from, Bundle extras) {
         Log.d(LOG_TAG, "onMessage - from: " + from);
@@ -70,6 +82,9 @@ public class GCMIntentService extends GcmListenerService implements PushConstant
         }
         if (intercomPushClient.isIntercomPush(extras)) {
             intercomPushClient.handlePush(getApplication(), extras);
+        } if else(PushPlugin.isPuswooshPush(extras)) {
+            extras.putString("from", from);
+            dispatchMessage(GCMListenerService.class.getName(), extras);
         } else {
             Context applicationContext = getApplicationContext();
 
