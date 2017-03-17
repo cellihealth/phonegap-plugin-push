@@ -71,7 +71,7 @@ public class PushHandlerActivity extends Activity implements PushConstants {
         Bundle extras = getIntent().getExtras();
         Bundle remoteInput = null;
 
-        if (extras != null && !PushPlugin.isIntercomPush(extras))	{
+        if (extras != null && !PushPlugin.isIntercomPush(extras) && !PushPlugin.isPushwooshPush(extras))	{
             Bundle originalExtras = extras.getBundle(PUSH_BUNDLE);
 
             originalExtras.putBoolean(FOREGROUND, false);

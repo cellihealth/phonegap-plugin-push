@@ -82,7 +82,7 @@ public class GCMIntentService extends GcmListenerService implements PushConstant
         }
         if (intercomPushClient.isIntercomPush(extras)) {
             intercomPushClient.handlePush(getApplication(), extras);
-        } if else(PushPlugin.isPuswooshPush(extras)) {
+        } if else(PushPlugin.isPushwooshPush(extras)) {
             extras.putString("from", from);
             dispatchMessage(GCMListenerService.class.getName(), extras);
         } else {
