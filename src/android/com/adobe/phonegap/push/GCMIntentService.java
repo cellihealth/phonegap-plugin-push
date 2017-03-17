@@ -30,7 +30,7 @@ import com.google.android.gms.gcm.GcmReceiver;
 import io.intercom.android.sdk.push.IntercomPushClient;
 
 import com.pushwoosh.GCMListenerService;
-]
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
