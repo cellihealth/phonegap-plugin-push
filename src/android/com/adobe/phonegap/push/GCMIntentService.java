@@ -25,6 +25,7 @@ import android.text.Spanned;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
+import com.google.android.gms.gcm.GcmReceiver;
 
 import io.intercom.android.sdk.push.IntercomPushClient;
 
@@ -82,7 +83,7 @@ public class GCMIntentService extends GcmListenerService implements PushConstant
         }
         if (intercomPushClient.isIntercomPush(extras)) {
             intercomPushClient.handlePush(getApplication(), extras);
-        } if else(PushPlugin.isPushwooshPush(extras)) {
+        } else if(PushPlugin.isPushwooshPush(extras)) {
             extras.putString("from", from);
             dispatchMessage(GCMListenerService.class.getName(), extras);
         } else {
